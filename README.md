@@ -1,31 +1,49 @@
-Role Name
+Lighthouse-role
 =========
 
-A brief description of the role goes here.
+Роль устанавливает на ваш хост Lighthouse
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+Особых требований не предъявляется.
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+Роль устанавливается из под пользователя с правами root. При необходимости данный параметр можно поменять в переменной в разделе vars.
+
+Дистрибутив выкачивается по ссылке: `http://github.com/VKCOM/lighthouse.git`
 
 Dependencies
 ------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+По умолчанию Вам необходимо иметь на своем хосте установленный nginx.
+Вы можете воспользоваться установкой nginx с playbook расположенного по ссылке `https://github.com/QuiteRunaWay/Ansible_2/tree/main/playbook`
+
+Так же необходимо для работы с репозиторием с дистрибутивом, иметь заранее установленный git.
 
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+пример установки роли:
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+hosts: your_hostname
+  roles: 
+    - lighthouse-role
+
+
+Пример установки с зависимостью git:
+
+hosts: your_hostname
+  pre_tasks:
+    - name: lighthouse | install dependencies
+      become: true
+      ansible.builtin.yum:
+        name: git
+        state: present  
+  roles: 
+    - lighthouse-role
 
 License
 -------
@@ -34,5 +52,3 @@ BSD
 
 Author Information
 ------------------
-
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
