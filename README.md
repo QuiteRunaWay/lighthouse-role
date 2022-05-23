@@ -49,6 +49,3 @@ License
 -------
 
 BSD
-
-Author Information
-------------------
